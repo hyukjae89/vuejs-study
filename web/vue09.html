@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>속성과 메소드</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        var data = {
+            a: 1
+        };
+
+        var app = new Vue({
+            data: data
+        });
+
+        // 같은 객체 참조
+        console.log("app.a === data.a : " + (app.a === data.a));
+
+        // 속성을 수정하면 원본 데이터에도 영향
+        app.a = 2;
+        console.log("data.a : " + data.a);
+
+        // 거꾸로도 동일
+        data.a = 3;
+        console.log("app.a : " + app.a);
+
+    </script>
+</body>
+</html>
