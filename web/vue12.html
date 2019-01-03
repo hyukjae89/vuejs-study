@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>속성과 메소드</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{ a }}</p>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        // 라이프사이클 훅
+        // created : after init
+        // mounted : after creating app.$el and replacing "el" with it
+        // updated : when data chnages
+        // destroyed : when app.$destroy() is called
+
+        var app = new Vue({
+            el: '#app',
+            data: ata = {
+                a: 1
+            },
+            created: function() {
+                console.log("created");
+            },
+            mounted: function() {
+                console.log("mounted");
+            },
+            updated: function() {
+                console.log("updated");
+            },
+            destroyed: function() {
+                console.log("destroyed");
+            }
+        });
+
+
+    </script>
+</body>
+</html>
