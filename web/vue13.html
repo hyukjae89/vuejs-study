@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>원시 HTML</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{ html }}</p>
+        <p v-html="html"></p>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        // 이중 중괄호는 HTML이 아닌 일반 텍스트로 데이터를 해석한다.
+        // 실제 HTML을 출력하려면 v-html 디렉티브를 사용한다.
+
+        var app = new Vue({
+            el: '#app',
+            data: ata = {
+                html: "<span style='color:red'>HTML 입니다.</span>"
+            }
+        });
+    </script>
+</body>
+</html>
