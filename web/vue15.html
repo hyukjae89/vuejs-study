@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript 표현식</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{ number + 1 }}</p>
+        <p>{{ ok ? 'YES' : 'NO' }}</p>
+        <p>{{ message.split('').reverse().join('') }}</p>
+        <div v-bind:id="'list-' + id"></div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                number: 1,
+                ok: true,
+                message: "Hello World",
+                id: "test"
+            }
+        });
+    </script>
+</body>
+</html>
