@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>디렉티브 - 전달인자</title>
+</head>
+<body>
+    <div id="app">
+        <a v-bind:href="url">url bind</a>
+        <button v-on:click="doSomething">doSomething</button>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        // 일부 디렉티브는 콜론으로 표시되는 "전달인자"를 사용할 수 있다.
+        // href는 전달인자로, 엘리먼트의 href 속성을 표현식 url 의 값에 바인드하는 v-bind 디렉티브에게 알려준다.
+        // 또 다른 예로 DOM 이벤트를 수신하는 v-on 디렉티브가 존재한다.
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                url: "test url"
+            },
+            methods: {
+                doSomething: function() {
+                    alert("do something");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
