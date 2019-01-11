@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>약어 - v-on</title>
+</head>
+<body>
+    <div id="app">
+        <a v-on:click="doSomething">v-on:click</a>
+        <a @click="doSomething">@click</a>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            methods: {
+                doSomething: function() {
+                    alert("doSomething");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
