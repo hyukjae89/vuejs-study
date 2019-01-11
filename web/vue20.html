@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>computed</title>
+</head>
+<body>
+    <div id="app">
+        <p>원본 메시지 : "{{ message }}"</p>
+        <p>역순으로 표시한 메시지 : "{{ reverseMessage }}"</p>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: "Hello Vuejs"
+            },
+            computed: {
+                reverseMessage: function() {
+                    return this.message.split('').reverse().join('');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
