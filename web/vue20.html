@@ -2,15 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>computed</title>
+    <title>computed 와 watch</title>
+    <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
+    <!-- 기본 예제 -->
     <div id="app">
         <p>원본 메시지 : "{{ message }}"</p>
         <p>역순으로 표시한 메시지 : "{{ reverseMessage }}"</p>
     </div>
-    <script src="https://unpkg.com/vue"></script>
     <script>
+        /*
+         * 복잡한 로직은 computed 속성을 사용한다.
+         * app.reverseMessage 의 값은 항상 app.message 의 값에 의존한다.
+         * app.message 가 바뀔 때 app.reverseMessage 에 의존하는 바인딩을 모두 업데이트한다.
+         */
+
         var app = new Vue({
             el: '#app',
             data: {
@@ -19,6 +26,183 @@
             computed: {
                 reverseMessage: function() {
                     return this.message.split('').reverse().join('');
+                }
+            }
+        });
+    </script>
+    <br><hr><br>
+
+    <!-- computed 속성의 캐싱 vs 메소드 -->
+    <div id="app2">
+        <p>원본 메시지 : "{{ message }}"</p>
+        <p>역순으로 표시한 메시지 (computed) : "{{ reverseMessage }}"</p>
+        <p>역순으로 표시한 메시지 (method) : "{{ reverseMessage2() }}"</p>
+    </div>
+    <script>
+        /*
+         * computed 속성 대신 메소드를 사용해도 같은 결과를 얻는다.
+         * 차이점은 computed 속성은 종속 대상을 따라 캐싱된다는 것이다.
+         * computed 속성은 해당 속성이 종속된 대상이 변경될 때만 함수를 실행한다.
+         * app2.message 가 변경되지 않는 한 app2.reverseMessage 를 요청해도 연산을 다시 하지 않고 캐싱된 결과를 반환한다.
+         */
+
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                message: "Hello Vuejs"
+            },
+            computed: {
+                reverseMessage: function() {
+                    return this.message.split('').reverse().join('');
+                },
+                now: function() {
+                    /*
+                     * 어떤 data 에도 의존하지 않는 computed 속성의 경우 최초 호출되었을 때 값을 캐싱하여 계속 반환한다
+                     */
+                    return Date.now();
+                }
+            },
+            methods: {
+                reverseMessage2: function() {
+                    return this.message.split('').reverse().join('');
+                }
+            }
+        });
+    </script>
+    <br><hr><br>
+
+    <!-- computed 속성의 setter 함수 -->
+    <div id="app3">
+        <p>firstName : "{{ firstName }}"</p>
+        <p>lastName : "{{ lastName }}"</p>
+        <p>fullName : "{{ fullName }}"</p>
+    </div>
+    <script>
+        /*
+         * computed 속성은 기본적으로 getter 함수만 가지고 있다.
+         * 하지만, 필요한 경우 setter 함수를 만들 수 있다.
+         * app3.fullName = 'update name' 을 실행하면 setter 가 호출되고 app3.firstName 과 app3.lastName 이 업데이트된다.
+         */
+
+        var app3 = new Vue({
+            el: '#app3',
+            data: {
+                firstName: "Hyukjae",
+                lastName: "Kwon"
+            },
+            computed: {
+                fullName: {
+                    get: function() {
+                        return this.firstName + ' ' + this.lastName;
+                    },
+                    set: function(newValue) {
+                        var names = newValue.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[names.length - 1];
+                    }
+                }
+            }
+        });
+    </script>
+    <br><hr><br>
+
+    <!-- watch 속성 -->
+    <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+    <div id="app4">
+        <p>yes/no 질문을 물어보세요</p>
+        <input v-model="question">
+        <p>{{ answer }}</p>
+    </div>
+    <script>
+        /*
+         * 대부분의 경우 computed 속성이 더 적합하지만 사용자가 만든 감시자가 필요한 경우도 있다.
+         * 이때, watch 옵션을 통해 데이터 변경에 반응하는 일반적인 방법이 있다.
+         * 데이터 변경에 대한 응답으로 비동기식 또는 많은 시간이 소요되는 연산을 수행하려는 경우에 가장 유용하다.
+         */
+
+        var app4 = new Vue({
+            el: '#app4',
+            data: {
+                question: "",
+                answer: "질문을 하기 전까지는 대답할 수 없습니다."
+            },
+            watch: {
+                // 질문이 변경될 때 마다 이 기능이 실행된다.
+                question: function(newQuestion) {
+                    this.answer = "입력을 기다리는 중...";
+                    this.getAnswer();
+                }
+            },
+            methods: {
+                getAnswer: _.debounce(
+                    function() {
+                        if (this.question.indexOf('?') === -1) {
+                            this.answer = '질문에는 일반적으로 물음표가 포함 됩니다. ;-)';
+                            return;
+                        }
+                        this.answer = '생각중...';
+                        var vm = this;
+                        axios.get('https://yesno.wtf/api')
+                            .then(function (response) {
+                                vm.answer = _.capitalize(response.data.answer);
+                            })
+                            .catch(function (error) {
+                                vm.answer = '에러! API 요청에 오류가 있습니다. ' + error;
+                            });
+                    },
+                    // 사용자가 입력을 기다리는 시간(밀리세컨드) 입니다.
+                    500
+                )
+            }
+        });
+    </script>
+    <br><hr><br>
+
+    <!-- computed 속성 vs watch 속성 -->
+    <div id="app5">
+        <p>{{ fullName }}</p>
+    </div>
+    <script>
+        /*
+         * watch 속성은 감시할 데이터를 지정하고 그 데이터가 바뀌면 이런 함수를 실행하라는 방식 : 명령형 프로그래밍
+         */
+
+        var app5 = new Vue({
+            el: '#app5',
+            data: {
+                firstName: "Foo",
+                lastName: "Bar",
+                fullName: "Foo Bar"
+            },
+            watch: {
+                firstName: function(val) {
+                    this.fullName = val + " " + this.lastName;
+                },
+                lastName: function(val) {
+                    this.fullName = this.firstName + " " + val;
+                }
+            }
+        });
+    </script>
+    <br>
+    <div id="app6">
+        <p>{{ fullName }}</p>
+    </div>
+    <script>
+        /*
+         * computed 속성은 계산해야 하는 목표 데이터를 정의하는 방식 : 선언형 프로그래밍
+         */
+
+        var app6 = new Vue({
+            el: '#app6',
+            data: {
+                firstName: "Foo",
+                lastName: "Bar"
+            },
+            computed: {
+                fullName: function() {
+                    return this.firstName + " " + this.lastName;
                 }
             }
         });
