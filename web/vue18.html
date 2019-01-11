@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>약어 - v-bind</title>
+</head>
+<body>
+    <div id="app">
+        <a v-bind:href="url">v-bind:href</a>
+        <a :href="url">:href</a>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                url: "testUrl"
+            }
+        });
+    </script>
+</body>
+</html>
