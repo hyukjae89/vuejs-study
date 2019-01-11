@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>디렉티브 - 수식어</title>
+</head>
+<body>
+    <div id="app">
+        <form v-on:submit.prevent="onSubmit">
+            <button>submit</button>
+        </form>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        // 수식어는 점으로 표시되는 특수 접미사
+        // 예를 들어, .prevent 수식어는 트리거된 이벤트에서 event.preventDefault() 를 호출하도록 v-on 디렉티브에 알려준다.
+
+        var app = new Vue({
+            el: '#app',
+            methods: {
+                onSubmit: function() {
+                    alert("onSubmit");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
