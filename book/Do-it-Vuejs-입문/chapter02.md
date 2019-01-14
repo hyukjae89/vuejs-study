@@ -17,7 +17,7 @@
 
 ```HTML
 <div id="app">{{ message }}</div>
-<script src="https://cnd/jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
 <script>
     new Vue({
         el: '#app',
