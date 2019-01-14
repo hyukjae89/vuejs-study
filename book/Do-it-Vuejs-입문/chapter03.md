@@ -128,7 +128,7 @@ new Vue({
         <button>컴포넌트 등록</button>
         <my-component></my-component>    
     </div>
-    <script src="https://cnd/jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script>
         Vue.component('my-component', {
            template: '<div>전역 컴포넌트가 등록되었습니다!</div>' 
@@ -149,7 +149,7 @@ new Vue({
         <button>컴포넌트 등록</button>
         <my-local-component></my-local-component>    
     </div>
-    <script src="https://cnd/jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script>
         new Vue({
             el: '#app',
@@ -205,7 +205,7 @@ new Vue({
     <div id="app">
         <child-component v-bind:propsdata="message"></child-component>    
     </div>
-    <script src="https://cnd/jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script>
         Vue.component('child-compoment', {
            props: ['propsdata'],
@@ -236,7 +236,7 @@ new Vue({
     <div id="app">
         <child-component v-on:show-log="printText"></child-component>    
     </div>
-    <script src="https://cnd/jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script>
         Vue.component('child-compoment', {
            template: '<button v-on:click="showLog">show</button>',
@@ -284,7 +284,7 @@ new Vue({
     <div id="app">
         <child-component></child-component>    
     </div>
-    <script src="https://cnd/jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script>
         var eventBus = new Vue();
         
