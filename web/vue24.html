@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>인라인 스타일 바인딩</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <!-- 객체 구문 -->
+    <div id="app">
+        <div v-bind:style ="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+        <div v-bind:style ="styleObject"></div> <!-- 더 간결하게 -->
+    </div>
+    <script>
+        /*
+         * 속성 이름에 camelCase 와 kebab-case 를 사용.
+         */
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                activeColor: 'red',
+                fontSize: 30,
+                styleObject: {
+                    color: 'red',
+                    fontSize: '13px'
+                }
+            }
+        });
+    </script>
+    <br><hr><br>
+
+    <!-- 배열 구문 -->
+    <div id="app2">
+        <div v-bind:style="[baseStyle, overridingStyles]"></div>
+    </div>
+    <script>
+        /*
+         * 같은 스타일의 엘리먼트에 여러 개의 스타일 객체를 사용.
+         */
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                baseStyle: {
+                    color: 'red'
+                },
+                overridingStyles: {
+                    fontSize: '13px'
+                }
+            }
+        });
+    </script>
+    <br><hr><br>
+
+    <!-- 자동 접두사 -->
+    <!-- v-bind:style 에 브라우저 벤더 접두어가 필요한 CSS 속성(예: transform)을 사용하면 Vue는 자동으로 해당 접두어를 감지하여 스타일을 적용. -->
+
+    <!-- 다중 값 제공 -->
+    <div id="app3">
+        <div v-bind:style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+    </div>
+    <script>
+        /*
+         * 2.3 버전 부터 스타일 속성에 접두사가 있는 여러 값을 배열로 전달할 수 있다.
+         */
+        var app3 = new Vue({
+            el: '#app3'
+        });
+    </script>
+</body>
+</html>
