@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML 클래스 바인딩 - 컴포넌트와 함께 사용</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <my-component class="bax boo"></my-component>
+        <my-component v-bind:class="{ active: isActive }"></my-component>
+    </div>
+    <script>
+        /*
+         * 사용자 정의 컴포넌트로 class 속성을 사용하면, 클래스가 컴포넌트의 루트 엘리먼트에 추가된다.
+         */
+        Vue.component('my-component', {
+            template: '<p class="foo bar">Hello Vue.js</p>'
+        });
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                isActive: true
+            }
+        });
+    </script>
+</body>
+</html>
