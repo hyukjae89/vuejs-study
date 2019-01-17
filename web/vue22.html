@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML 클래스 바인딩 - 배열 구문</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-bind:class="[activeClass, errorClass]"></div>
+        <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+        <div v-bind:class="[{ active: isActive }, errorClass]"></div>
+    </div>
+    <script>
+        /*
+         * 배열을 v-bind:class 에 전달하여 클래스 목록을 지정할 수 있다.
+         */
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                activeClass: 'active',
+                errorClass: 'text-danger',
+                isActive: true
+            }
+        });
+    </script>
+</body>
+</html>
