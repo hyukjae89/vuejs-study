@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>리스트 렌더링</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <!-- v-for -->
+    <ul id="app">
+        <li v-for="item in items">
+            {{ item.message }}
+        </li>
+    </ul>
+    <script>
+        /*
+         * 배열을 기반으로 리스트를 렌더링.
+         * item in items 형태로 사용.
+         */
+        new Vue({
+            el: '#app',
+            data: {
+                items: [
+                    { message: 'Foo' },
+                    { message: 'Bar' }
+                ]
+            }
+        });
+    </script>
+    <ul id="app2">
+        <li v-for="(item, index) in items">
+            {{ parentMessage }} - {{ index }} - {{ item.message }}
+        </li>
+    </ul>
+    <script>
+        /*
+         * v-for 블럭 안에는 부모 범위 속성에 대한 모든 권한이 있다.
+         * 현재 항목의 인덱스에 대한 두 번째 전달인자 옵션이 있다.
+         */
+        new Vue({
+            el: '#app2',
+            data: {
+                parentMessage: 'Parent',
+                items: [
+                    { message: 'Foo' },
+                    { message: 'Bar' }
+                ]
+            }
+        });
+    </script>
+    <ul id="app3">
+        <li v-for="item of items">
+            {{ item.message }}
+        </li>
+    </ul>
+    <script>
+        /*
+         * in 대신 of 를 사용할 수 있다.
+         */
+        new Vue({
+            el: '#app3',
+            data: {
+                items: [
+                    { message: 'Foo' },
+                    { message: 'Bar' }
+                ]
+            }
+        });
+    </script>
+
+    <br><hr><br>
+
+    <!-- v-for 와 객체 -->
+    <ul id="app4">
+        <li v-for="value in object">
+            {{ value }}
+        </li>
+        <div v-for="(value, key) in object">
+            {{ key }}: {{ value }}
+        </div>
+        <div v-for="(value, key, index) in object">
+            {{ index }}. {{ key }} : {{ value }}
+        </div>
+    </ul>
+    <script>
+        /*
+         * v-for 를 사용하여 객체의 속성을 반복할 수 있다.
+         * 키에 대한 두번째 전달 인자를 제공할 수 있다.
+         * 인덱스도 제공한다.
+         */
+        new Vue({
+            el: '#app4',
+            data: {
+                object: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    age: 30
+                }
+            }
+        });
+    </script>
+
+    <br><hr><br>
+
+    <!-- key -->
+    <div id="app5">
+        <div v-for="(value, key, index) in object">
+            {{ index }}. {{ key }} : {{ value }}
+        </div>
+    </div>
+    <script>
+        /*
+         * Vue 가 v-for 에서 렌더링된 엘리먼트 목록을 갱신할 대 기본적으로 "in-place-patch" 전략을 사용한다.
+         * 데이터 항목의 순서가 변경된 경우 항목의 순서와 일치하도록 DOM 요소를 이동하는 대신 Vue 는 각 요소를 적절한 위치에 패치하고 해당 인덱스에서 렌더링할 내용을 반영하는지 확인한다.
+         * 이것은 목록의 출력 결과가 하위 컴포넌트 상태 또는 임시 DOM 상태에 의존하지 않는 경우에 적합하다.
+         *
+         * Vue 가 각 노드의 ID를 추적하고 기존 엘리먼트를 재사용하고 재정렬할 수 있도록 힌트를 제공하려면 각 항목에 고유한 key 속성을 제공해야 한다.
+         * key 에 대한 이상적인 값은 각 항목의 고유한 ID 이다.
+         *
+         * 반복되는 DOM 내용이 단순하지 않거나 의도적인 성능 향상을 위해 기본 동작에 의존하지 않는한 언제나 v-for 에 key 를 추가하는것이 좋다.
+         * key 는 Vue 가 노드를 식별하는 일반적인 메커니즘이기에 v-for 와 특별히 연관되지 않는 다른 용도로도 사용된다.
+         */
+        new Vue({
+            el: '#app4',
+            data: {
+                object: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    age: 30
+                }
+            }
+        });
+    </script>
+
+    <br><hr><br>
+
+    <!-- 배열 변경 감지 -->
+    <script>
+        /*
+         * 변이 메소드.
+         * Vue 는 감시중인 배열의 변이 메소드를 래핑하여 뷰 갱신을 트기러한다.
+         * 래핑된 메소드는 push(), pop(), shift(), unshift(), splice(), sort(), reverse() 가 있다.
+         * 호출된 원본 배열을 변형한다.
+         *
+         * 배열 대체.
+         * 원본 배열을 변형하지 않는다.
+         * filter(), concat(), slice() 는 항상 새 배열을 반환한다.
+         *
+         * 주의 사항.
+         * Javascript 제한으로 인해 Vue 는 배열에 대해 다음과 같은 변경 사항을 감지할 수 없다.
+         * 1. 인덱스로 배열에 있는 항목을 직접 설정하는 경우
+         *      해결 방법
+         *          Vue.set : Vue.set(app.items, indexOfItem, newValue)
+         *          Array.prototype.splice : app.items.splice(indexOfItem, 1, newValue)
+         * 2. 배열 길이를 수정하는 경우
+         *      해결 방법
+         *          app.items.splice(newLength)
+         */
+    </script>
+</body>
+</html>
