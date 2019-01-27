@@ -8,7 +8,7 @@ module.exports = {
   dev: {
 
     // Paths
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: 'todo-list/static',
     assetsPublicPath: '/',
     proxyTable: {},
 
@@ -45,11 +45,11 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '../../../../web/todo-list/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsRoot: path.resolve(__dirname, '../../../../web'),
+    assetsSubDirectory: 'todo-list/static',
     assetsPublicPath: '/',
 
     /**
